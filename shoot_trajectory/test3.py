@@ -136,9 +136,59 @@ class QuantumPoint:
         return angles
 
 
+def get_closest_angle(current_angle, angles):
+    if len(angles) == 0: return None
+    return min(angles, key=lambda angle: abs(angle - current_angle))
 
-q = QuantumPoint.from_point(3, 3)
-q.angle_collapse(rad(45))
-q.collapse_y(0)
-q.set_angle_range(20, 110, degrees=True)
-q.collapse_y(0)
+
+
+def example_calculation(
+    h: float,
+    d: float,
+    r: float = 0.,
+    u: float = 0.,
+    rotation: float = 0.,
+    angle_range = (20., 90.),
+    current_angle: float = 0.,
+):
+    """
+    h: height of the target
+    d: distance to the target
+    r: distance in the x axis from rotation point to shooter (if any)
+    u: distance in the y axis from rotation point to shooter (if any)
+    rotation: rotation angle of the shooter (if any)
+    angle_range: range of angles to consider
+    current_angle: current angle of the shooter (to find the closest angle in the range)
+    """
+
+    # example usage to get angle
+    q = QuantumPoint.from_point(d, h)
+    q.set_angle_range(*angle_range, degrees=True)
+    q.debug = True
+
+    # shooterın dönme noktasına göre konumunu tanımla
+    q.shift(r, u)
+    q.rotate(rotation)
+
+    # olabilecek açıları bul
+    angles = q.collapse_y(0)
+
+    # range içinde olan en yakın açılar arasından en yakın olanı seç
+    return get_closest_angle(current_angle, angles)
+
+
+# q = QuantumPoint.from_point(3, 3)
+# q.angle_collapse(rad(45))
+# q.collapse_y(0)
+# q.set_angle_range(20, 110, degrees=True)
+# q.collapse_y(0)
+
+example_calculation(
+    h = 180,
+    d = 513,
+    r = 45,
+    u = 15,
+    rotation = 0,
+    angle_range = (0, 90),
+    current_angle = 0,
+)
