@@ -1,0 +1,3 @@
+[submodule "24-regional-robocode"]
+	path = 24-regional-robocode
+	url = https://github.com/team-nf/24-regional-robocode.git
