@@ -9,6 +9,8 @@ import numpy as np
 import cmath
 import math
 
+import time
+
 
 i = complex(0, 1)
 
@@ -49,7 +51,7 @@ class QuantumPoint:
 
     def apply_func(self, func, args=(), kwargs={}):
         for i in range(3):
-            rv = func(self.x_poly.coef[i], self.y_poly.coef[i], *args, **kwargs)
+            rv = func(self.x_poly.coef[i], self.y_poly.coef[i], coef_degree=i, *args, **kwargs)
             self.x_poly.coef[i], self.y_poly.coef[i] = rv
 
 
@@ -136,6 +138,7 @@ class QuantumPoint:
         return angles
 
 
+
 def get_closest_angle(current_angle, angles):
     if len(angles) == 0: return None
     return min(angles, key=lambda angle: abs(angle - current_angle))
@@ -177,18 +180,20 @@ def example_calculation(
     return get_closest_angle(current_angle, angles)
 
 
-# q = QuantumPoint.from_point(3, 3)
-# q.angle_collapse(rad(45))
-# q.collapse_y(0)
-# q.set_angle_range(20, 110, degrees=True)
-# q.collapse_y(0)
+def test():
+    start_time = time.time()
+    example_calculation(
+        h = 180,
+        d = 513,
+        r = 45,
+        u = 15,
+        rotation = 0,
+        angle_range = (0, 90),
+        current_angle = 0,
+    )
+    print(f"Calculation per second: {1/(time.time() - start_time):.3f}")
 
-example_calculation(
-    h = 180,
-    d = 513,
-    r = 45,
-    u = 15,
-    rotation = 0,
-    angle_range = (0, 90),
-    current_angle = 0,
-)
+
+if __name__ == "__main__":
+    test()
+
