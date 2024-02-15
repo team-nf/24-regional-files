@@ -2,3 +2,7 @@
 	path = 24_regional_robocode
 	url = https://github.com/team-nf/24-regional-robocode.git
 	branch = development
+[submodule "YAGSL-NF"]
+	path = YAGSL-NF
+	url = https://github.com/team-nf/YAGSL-NF.git
+	branch = dev
