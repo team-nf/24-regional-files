@@ -6,3 +6,7 @@
 	path = YAGSL-NF
 	url = https://github.com/team-nf/YAGSL-NF.git
 	branch = dev
+[submodule "YAGSL-Example"]
+	path = YAGSL-Example
+	url = https://github.com/tunapro1234/YAGSL-Example-withVictorSPX.git
+	branch = main
